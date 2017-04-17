@@ -37,4 +37,24 @@ describe('PromiseifyAll', ()=>{
     }).catch(done);
   });
 
+  it('test object of the only function.', (done)=>{
+    const Classes = {
+      foo(a, b, cb){
+        cb(null, a, b);
+      },
+      bar(a, cb){
+        cb(null, a);
+      },
+      hello(cb){
+        cb(null)
+      }
+    };
+    const c = promiseify(Classes, Classes, true, 'bar hello');
+    Promise.all([c.bar(1), c.hello()]).then(([bar, hello])=>{
+      assert.deepEqual(bar, [1]);
+      assert.equal(hello, undefined);
+      done();
+    }).catch(done);
+  });
+
 });

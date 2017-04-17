@@ -15,6 +15,7 @@ You can set the following parameter:
 - @param {string|function|object}  `target`
 - @param {null|object}             `[ctx=null]`
 - @param {boolean}                 `[isCover=true]`
+- @param {string|array}            `[only=[]]`
 - @returns {function|object}
 
 ## Examples
@@ -56,6 +57,26 @@ c.foo(1, 2).then((res)=>{
   console.log(res);  // [1, 2]
 });
 
+```
+
+Wrap a the methods specified:
+```javascript
+const Classes = {
+  foo(a, b, cb){
+    cb(null, a, b);
+  },
+  bar(a, cb){
+    cb(null, a);
+  },
+  hello(cb){
+    cb(null)
+  }
+};
+const c = promiseify(Classes, Classes, true, 'bar hello');
+Promise.all([c.bar(1), c.hello()]).then(([bar, hello])=>{
+  console.log(bar);
+  console.log(hello);
+});
 ```
 
 ## Tests
