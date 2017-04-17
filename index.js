@@ -16,10 +16,6 @@ function PromiseifyAll (target, ctx=null, isCover=true, only=[]){
     target = require(target);
   }
 
-  if(!ctx){
-    ctx = target;
-  }
-
   if ('function' === typeof target){
     return Promiseify(target, ctx);
   }
