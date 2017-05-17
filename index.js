@@ -26,7 +26,7 @@ function PromiseifyAll (target, ctx=null, isCover=true, only=[]){
 
   if ('object' === typeof target){
     for (const key in target) {
-      if (target.hasOwnProperty(key) && 'function' === typeof target[key]) {
+      if ('function' === typeof target[key]) {
         const nkey = isCover ? key : key + 'Sync';
         if (only.length > 0){
           if (only.includes(key)){
